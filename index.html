@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diwan of Prizes — ديوان الجوائز</title>
+<meta name="description" content="Directory of Arabic and English literary, poetry, translation and cultural awards — deadlines, filters, and your own added prizes.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0E4B45">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Diwan">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1C2422; --teal:#0E4B45; --teal-soft:#E4EEEC; --brass:#B08A2E; --brass-soft:#F5EDD8;
+  --paper:#FAF8F2; --card:#FFFFFF; --line:#E2DFD5; --muted:#8A8577; --body-mut:#565248;
+  --open:#1E7A4F; --open-soft:#E5F3EB; --closed:#8A8577; --closed-soft:#EFEDE6; --alert:#A3492A; --alert-soft:#F6E7E0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;min-height:100vh}
+.disp{font-family:'Fraunces',Georgia,serif}
+[dir="rtl"] .disp{font-family:'Amiri','IBM Plex Sans Arabic',serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--card);width:100%}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+a{color:inherit}
+/* header */
+header{background:var(--teal);color:#F4F1E6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.head-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-top:22px}
+.eyebrow{letter-spacing:.18em;font-size:11px;opacity:.75;text-transform:uppercase}
+h1.disp{font-size:34px;line-height:1.15;margin-top:4px;color:#F8F3E3}
+[dir="rtl"] h1.disp{font-size:40px}
+.lang-btn{padding:8px 14px;border-radius:999px;font-size:13px;font-weight:500;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#F4F1E6}
+.ticker{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;align-items:center;-webkit-overflow-scrolling:touch}
+.ticker-label{font-size:11px;color:var(--brass);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.ticker button{padding:6px 12px;border-radius:999px;font-size:12px;white-space:nowrap;background:rgba(255,255,255,.10);color:#FBF7EC;border:1px solid rgba(255,255,255,.18)}
+.ticker button.hot{background:var(--alert)}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px}
+nav.tabs button{padding:9px 16px;font-size:14px;font-weight:500;border-radius:10px 10px 0 0;color:rgba(244,241,230,.75)}
+nav.tabs button[aria-selected="true"]{background:var(--paper);color:var(--teal)}
+/* filter bar */
+.filters{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);padding:12px 0;display:flex;flex-direction:column;gap:8px}
+.filters .row{display:flex;gap:8px;flex-wrap:wrap}
+.filters select{width:auto;flex:1;min-width:130px}
+.count{font-size:12px;color:var(--muted);margin:10px 0 2px}
+/* cards */
+.grid{display:grid;grid-template-columns:1fr;gap:14px;padding:10px 0 40px}
+@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+.card{display:flex;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:box-shadow .18s,transform .18s}
+.card:hover{box-shadow:0 6px 24px rgba(28,36,34,.10);transform:translateY(-2px)}
+@media(prefers-reduced-motion:reduce){.card,.card:hover{transition:none;transform:none}}
+.spine{width:7px;flex-shrink:0}
+.card-body{flex:1;padding:16px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11px;color:var(--muted)}
+.chip{padding:2px 9px;border-radius:999px;font-weight:500}
+h3.disp{font-size:19px;line-height:1.25;margin-top:6px}
+[dir="rtl"] h3.disp{font-size:22px}
+.org{font-size:12px;color:var(--muted);margin-top:2px}
+.desc{font-size:14px;color:#43413A;margin-top:8px}
+.val{font-size:14px;font-weight:600;color:var(--teal);margin-top:8px}
+.dates{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:var(--body-mut);margin-top:8px}
+.dleft{font-weight:600}
+.detail{border-top:1px dashed var(--line);margin-top:12px;padding-top:12px;font-size:14px;display:grid;gap:8px}
+.detail .k{font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btn{padding:7px 12px;border-radius:10px;font-size:12px;font-weight:500;text-decoration:none;display:inline-block}
+.btn-teal{background:var(--teal);color:#F4F1E6}.btn-soft{background:var(--teal-soft);color:var(--teal)}
+.btn-brass{background:var(--brass-soft);color:#7A5E17}.btn-danger{background:var(--alert-soft);color:var(--alert)}
+.btn-line{border:1px solid var(--line)}
+.bookmark{width:36px;height:36px;border-radius:50%;font-size:17px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);background:var(--paper);color:#B7B2A3}
+.bookmark.on{background:var(--brass-soft);color:#7A5E17;border-color:var(--brass)}
+.card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+/* form */
+.form-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:16px}
+.form-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:760px){.form-grid{grid-template-columns:1fr 1fr}}
+label.f{font-size:12px;font-weight:500;color:var(--body-mut);display:block}
+label.f input,label.f select,label.f textarea{margin-top:4px}
+.full{grid-column:1/-1}
+.note{font-size:13px;color:var(--body-mut);max-width:640px;margin-top:8px;line-height:1.6}
+.warn{background:var(--brass-soft);color:#7A5E17;border:1px solid var(--brass);border-radius:12px;padding:10px 14px;font-size:13px;margin-top:12px;display:none}
+.admin-row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;flex-wrap:wrap;margin-top:8px}
+.admin-row .nm{font-size:14px;font-weight:600}
+.admin-row .vf{font-size:11px;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);font-size:14px;padding:48px 0}
+footer{text-align:center;font-size:12px;color:var(--muted);padding:0 16px 34px}
+h2.disp{font-size:24px;color:var(--teal);margin-top:20px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#F4F1E6;padding:10px 18px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="head-top">
+      <div>
+        <div class="eyebrow" id="tagline"></div>
+        <h1 class="disp"><span id="appname"></span> <span style="color:var(--brass)">✦</span></h1>
+      </div>
+      <button class="lang-btn" id="langBtn" onclick="toggleLang()"></button>
+    </div>
+    <div class="ticker" id="ticker"></div>
+    <nav class="tabs" id="tabs"></nav>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+<footer id="footer"></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =============== DATA — verified snapshot July 2026 =============== */
+const BUILT_IN = [
+{id:"szba",section:"arabic",nameEn:"Sheikh Zayed Book Award",nameAr:"جائزة الشيخ زايد للكتاب",orgEn:"Abu Dhabi Arabic Language Centre (DCT)",orgAr:"مركز أبوظبي للغة العربية",country:"AE",category:"literature",valueEn:"AED 750,000 per category (9 categories); AED 1M Cultural Personality; AED 7.75M total",valueAr:"750 ألف درهم لكل فئة (9 فئات)؛ مليون درهم لشخصية العام الثقافية؛ 7.75 مليون إجمالاً",eligEn:"Arabic works with ISBN, published within past 2 years, not previously awarded; 5 categories open internationally (incl. Translation).",eligAr:"أعمال عربية برقم دولي صدرت خلال سنتين ولم تفز بجائزة كبرى؛ خمس فئات مفتوحة دولياً بينها الترجمة.",open:"2026-05-01",close:"2026-09-01",announce:"March–April 2027",link:"https://www.zayedaward.ae",descEn:"The Arab world's flagship book award across literature, translation, young author, children's literature and more.",descAr:"الجائزة الأبرز عربياً في الأدب والترجمة والمؤلف الشاب وأدب الطفل وغيرها.",verified:"2026-07-09"},
+{id:"ipaf",section:"arabic",nameEn:"International Prize for Arabic Fiction (IPAF)",nameAr:"الجائزة العالمية للرواية العربية (البوكر)",orgEn:"Booker Prize Foundation / DCT Abu Dhabi",orgAr:"مؤسسة بوكر / دائرة الثقافة والسياحة أبوظبي",country:"AE",category:"fiction",valueEn:"$50,000 winner; $10,000 × 6 shortlist; English translation funding",valueAr:"50 ألف دولار للفائز؛ 10 آلاف لكل عمل في القائمة القصيرة؛ تمويل ترجمة إنجليزية",eligEn:"Arabic novels only, publisher-submitted, first published within the eligibility year; living authors.",eligAr:"روايات عربية فقط، ترشحها دور النشر، منشورة أول مرة ضمن فترة الأهلية؛ لمؤلفين أحياء.",open:"2026-05-01",close:"2026-06-30",announce:"April 2027 (Abu Dhabi)",link:"https://www.arabicfiction.org",descEn:"\"The Arabic Booker\" — the most prestigious prize for the Arabic novel.",descAr:"«بوكر العربية» — أرفع جائزة مخصصة للرواية العربية.",verified:"2026-07-09"},
+{id:"kanz",section:"arabic",nameEn:"Kanz Al Jeel Award",nameAr:"جائزة كنز الجيل",orgEn:"Abu Dhabi Arabic Language Centre",orgAr:"مركز أبوظبي للغة العربية",country:"AE",category:"poetry",valueEn:"AED 1.5M total: AED 200,000 × 4 categories + AED 500,000 Creative Personality",valueAr:"1.5 مليون درهم: 200 ألف لكل فئة (4 فئات) + 500 ألف لشخصية العام الإبداعية",eligEn:"Nabati poetry, folklore studies, translations of Nabati poetry, and arts; published within 5 years, ISBN required.",eligAr:"الشعر النبطي والدراسات الفلكلورية وترجمات الشعر النبطي والفنون؛ منشورة خلال 5 سنوات وبرقم دولي.",open:"2026-02-01",close:"2026-05-30",announce:"Al Ain Book Festival (Nov)",link:"https://kanzaljeel.ae",descEn:"Honours Nabati (vernacular Gulf) poetry and its scholarship, inspired by Sheikh Zayed's own verse.",descAr:"تكرّم الشعر النبطي ودراساته، مستلهمة تجربة الشيخ زايد الشعرية.",verified:"2026-07-09"},
+{id:"sard",section:"arabic",nameEn:"Sard Al Thahab (Golden Narrative) Award",nameAr:"جائزة سرد الذهب",orgEn:"Abu Dhabi Arabic Language Centre",orgAr:"مركز أبوظبي للغة العربية",country:"AE",category:"fiction",valueEn:"Six tracks: Emirati narrative, oral narrators, short story (published & unpublished), visual narrative, folk narratives",valueAr:"ست فئات: السردية الإماراتية، الرواة، القصة القصيرة (منشورة وغير منشورة)، السرد البصري، السرود الشعبية",eligEn:"Open to all nationalities and ages; PDF submission via award site.",eligAr:"مفتوحة لجميع الجنسيات والأعمار؛ التقديم بصيغة PDF عبر موقع الجائزة.",open:"2026-03-01",close:"2026-06-15",announce:"December 2026",link:"https://alc.ae",descEn:"Celebrates Emirati and Arab storytelling and folk-narrative heritage.",descAr:"تحتفي بفنون الحكاية والسرد الشعبي الإماراتي والعربي.",verified:"2026-07-09"},
+{id:"owais",section:"arabic",nameEn:"Sultan Bin Ali Al Owais Cultural Award",nameAr:"جائزة سلطان بن علي العويس الثقافية",orgEn:"Al Owais Cultural Foundation",orgAr:"مؤسسة سلطان بن علي العويس الثقافية",country:"AE",category:"culture",valueEn:"$150,000 per category (poetry; fiction/drama; studies & criticism; humanities; achievement)",valueAr:"150 ألف دولار لكل فئة (الشعر؛ القصة والرواية والمسرح؛ الدراسات والنقد؛ الإنسانيات؛ الإنجاز)",eligEn:"Arab writers, thinkers and scholars; judged on merit regardless of politics, religion or gender.",eligAr:"للكتّاب والمفكرين والباحثين العرب؛ على أساس الاستحقاق دون اعتبار سياسي أو ديني أو جندري.",open:"2026-02-01",close:"2026-08-01",announce:"2027 ceremony (Dubai)",link:"https://www.alowais.com",descEn:"Independent biennial award, among the most respected in Arab letters since 1987.",descAr:"جائزة مستقلة تُمنح كل دورتين، من أعرق جوائز الأدب العربي منذ 1987.",verified:"2026-07-09"},
+{id:"iaacl",section:"arabic",nameEn:"International Award for Arabic Children's Literature (ex-Etisalat Award)",nameAr:"الجائزة الدولية لأدب الطفل العربي (اتصالات سابقاً)",orgEn:"UAEBBY / e& UAE",orgAr:"المجلس الإماراتي لكتب اليافعين / اتصالات",country:"AE",category:"children",valueEn:"AED 1.2M total: AED 180,000 per category (split author/illustrator/publisher) + AED 300,000 workshops",valueAr:"1.2 مليون درهم: 180 ألفاً لكل فئة (بين المؤلف والرسام والناشر) + 300 ألف لبرنامج الورش",eligEn:"Original Arabic children's/YA books published within 3 years, no prior major awards.",eligAr:"كتب أطفال ويافعين عربية أصلية صدرت خلال 3 سنوات ولم تفز بجوائز كبرى.",open:"2026-04-01",close:"2026-08-31",announce:"Sharjah Intl Book Fair (Nov)",link:"https://iaacl.ae",descEn:"The region's leading children's-literature prize, announced each year in Sharjah.",descAr:"أهم جائزة لأدب الطفل في المنطقة، تُعلن سنوياً في معرض الشارقة للكتاب.",verified:"2026-07-09"},
+{id:"mbr-lang",section:"arabic",nameEn:"Mohammed Bin Rashid Award for Arabic Language",nameAr:"جائزة محمد بن راشد للغة العربية",orgEn:"Mohammed Bin Rashid Library, Dubai",orgAr:"مكتبة محمد بن راشد، دبي",country:"AE",category:"linguistics",valueEn:"Multi-category recognition for Arabic-language initiatives (education, tech, media, translation)",valueAr:"فئات متعددة لمبادرات خدمة اللغة العربية (تعليم، تقنية، إعلام، ترجمة)",eligEn:"Institutions & individuals with initiatives serving Arabic; not for single literary works.",eligAr:"مؤسسات وأفراد أصحاب مبادرات تخدم العربية؛ ليست لأعمال أدبية مفردة.",open:"2026-01-26",close:null,announce:"Dubai ceremony",link:"https://arabicaward.ae",descEn:"10th edition launched at Cairo Intl Book Fair 2026; the closest major award to language/linguistics work.",descAr:"انطلقت الدورة العاشرة في معرض القاهرة 2026؛ أقرب الجوائز الكبرى للعمل اللغوي.",verified:"2026-07-09"},
+{id:"hamad",section:"arabic",nameEn:"Sheikh Hamad Award for Translation & International Understanding",nameAr:"جائزة الشيخ حمد للترجمة والتفاهم الدولي",orgEn:"FAIR Forum, Doha",orgAr:"منتدى العلاقات العربية والدولية، الدوحة",country:"QA",category:"translation",valueEn:"$200,000 per single-book category (top 3, per direction); $100,000 × 5 achievement languages",valueAr:"200 ألف دولار لفئة الكتاب المفرد (أول ثلاثة، بالاتجاهين)؛ 100 ألف لكل لغة إنجاز (5 لغات)",eligEn:"Translation to/from Arabic. 2026 single-book languages: English & Chinese; achievement: +Italian, Azerbaijani, Fula.",eligAr:"الترجمة من العربية وإليها. لغات 2026 لفئة الكتاب: الإنجليزية والصينية؛ الإنجاز: +الإيطالية والأذربيجانية والفولانية.",open:"2026-01-05",close:"2026-03-31",announce:"December 2026 (Doha)",link:"https://www.hta.qa",descEn:"One of the world's richest translation prizes ($2M total pool).",descAr:"من أكبر جوائز الترجمة عالمياً (مليونا دولار إجمالاً).",verified:"2026-07-09"},
+{id:"katara",section:"arabic",nameEn:"Katara Prize for Arabic Novel",nameAr:"جائزة كتارا للرواية العربية",orgEn:"Katara Cultural Village, Doha",orgAr:"المؤسسة العامة للحي الثقافي كتارا",country:"QA",category:"fiction",valueEn:"≈$60,000 winner (varies by category); translation support — verify current cycle",valueAr:"نحو 60 ألف دولار للفائز (يختلف حسب الفئة)؛ دعم ترجمة — يُرجى التحقق",eligEn:"Published & unpublished Arabic novels; annual cycle.",eligAr:"روايات عربية منشورة وغير منشورة؛ دورة سنوية.",open:null,close:null,announce:"Annual (Doha)",link:"https://kataraprize.com",descEn:"Major Qatari novel prize with a translation-support component.",descAr:"جائزة قطرية كبرى للرواية تتضمن دعماً للترجمة.",verified:"2026-07-09"},
+{id:"mahfouz",section:"arabic",nameEn:"Naguib Mahfouz Medal for Literature",nameAr:"جائزة نجيب محفوظ للأدب",orgEn:"AUC Press, Cairo",orgAr:"قسم النشر بالجامعة الأمريكية بالقاهرة",country:"EG",category:"fiction",valueEn:"Cash award + guaranteed English translation & publication by AUC Press",valueAr:"جائزة نقدية + ترجمة إنجليزية ونشر مضمونان عبر منشورات الجامعة الأمريكية",eligEn:"Arabic novels; submission per AUC Press rules.",eligAr:"روايات عربية؛ الترشيح وفق قواعد الناشر.",open:null,close:null,announce:"December (Mahfouz's birthday)",link:"https://aucpress.com",descEn:"Prestige lies in the guaranteed English translation as much as the medal.",descAr:"قيمتها الكبرى في الترجمة الإنجليزية المضمونة بقدر الميدالية نفسها.",verified:"2026-07-09"},
+{id:"babtain",section:"arabic",nameEn:"Abdulaziz Saud Al-Babtain Prize for Poetic Creativity",nameAr:"جائزة عبدالعزيز سعود البابطين للإبداع الشعري",orgEn:"Al-Babtain Cultural Foundation, Kuwait",orgAr:"مؤسسة البابطين الثقافية، الكويت",country:"KW",category:"poetry",valueEn:"Six-figure USD pool across categories (best diwan, best poem, criticism) — verify current cycle",valueAr:"مبالغ بست خانات دولارية عبر الفئات (أفضل ديوان، أفضل قصيدة، النقد) — يُرجى التحقق",eligEn:"Arabic poetry and poetry criticism; periodic sessions.",eligAr:"الشعر العربي ونقده؛ دورات دورية.",open:null,close:null,announce:"Periodic sessions",link:"https://www.albabtainprize.org",descEn:"One of the Gulf's oldest poetry-specific prizes.",descAr:"من أقدم جوائز الشعر المتخصصة في الخليج.",verified:"2026-07-09"},
+{id:"sharjah-creativity",section:"arabic",nameEn:"Sharjah Award for Arab Creativity",nameAr:"جائزة الشارقة للإبداع العربي",orgEn:"Sharjah Department of Culture",orgAr:"دائرة الثقافة بالشارقة",country:"AE",category:"emerging",valueEn:"Up to $6,000 across categories (first-work: story, poetry, novel, theatre, children's lit, criticism)",valueAr:"حتى 6 آلاف دولار عبر الفئات (الإصدار الأول: قصة، شعر، رواية، مسرح، أدب طفل، نقد)",eligEn:"Arab writers under 40 submitting a first work.",eligAr:"للكتّاب العرب دون الأربعين المتقدمين بإصدار أول.",open:null,close:null,announce:"Annual",link:"https://sdc.gov.ae",descEn:"The region's main first-book / emerging-writer award.",descAr:"أبرز جائزة عربية مخصصة للإصدار الأول والمواهب الصاعدة.",verified:"2026-07-09"},
+{id:"unesco-sharjah",section:"arabic",nameEn:"UNESCO–Sharjah Prize for Arab Culture",nameAr:"جائزة اليونسكو–الشارقة للثقافة العربية",orgEn:"UNESCO, Paris / Sharjah",orgAr:"اليونسكو / الشارقة",country:"INT",category:"culture",valueEn:"€56,400 split between two laureates",valueAr:"56,400 يورو تُقسم بين فائزين اثنين",eligEn:"Nomination by governments and NGOs — not open individual application.",eligAr:"الترشيح عبر الحكومات والمنظمات — لا تقديم فردياً مباشراً.",open:null,close:null,announce:"Annual (Paris)",link:"https://www.unesco.org",descEn:"Honours dissemination of Arab culture worldwide, since 1998.",descAr:"تكرّم نشر الثقافة العربية في العالم منذ 1998.",verified:"2026-07-09"},
+{id:"ibn-battuta",section:"arabic",nameEn:"Ibn Battuta Award for Geographic Literature",nameAr:"جائزة ابن بطوطة لأدب الرحلة",orgEn:"Arab Centre for Geographic Literature",orgAr:"المركز العربي للأدب الجغرافي — ارتياد الآفاق",country:"AE",category:"culture",valueEn:"Multiple categories (edited travel texts, contemporary travel writing, translation) — verify current values",valueAr:"فئات متعددة (تحقيق نصوص الرحلة، الرحلة المعاصرة، الترجمة) — يُرجى التحقق من القيم",eligEn:"Arabic travel & geographic literature; 25th cycle marked in 2026.",eligAr:"أدب الرحلة والجغرافيا بالعربية؛ الدورة الخامسة والعشرون في 2026.",open:null,close:null,announce:"Annual",link:"https://www.mobdii.com",descEn:"A quarter-century championing Arabic travel writing and its translation.",descAr:"ربع قرن في خدمة أدب الرحلة العربي وترجمته.",verified:"2026-07-09"},
+{id:"emirates-novel",section:"arabic",nameEn:"Emirates Novel Award & Emirates Literature Foundation Prizes",nameAr:"جائزة الإمارات للرواية وجوائز مؤسسة الإمارات للآداب",orgEn:"Emirates Literature Foundation, Dubai",orgAr:"مؤسسة الإمارات للآداب، دبي",country:"AE",category:"fiction",valueEn:"Varies by category; cash + publication support — verify current cycle",valueAr:"تختلف حسب الفئة؛ جوائز نقدية ودعم نشر — يُرجى التحقق",eligEn:"Emirati and Arab writers; categories tied to the Emirates Airline Festival of Literature programme.",eligAr:"للكتّاب الإماراتيين والعرب؛ ترتبط الفئات ببرنامج مهرجان طيران الإمارات للآداب.",open:null,close:null,announce:"Festival week, late January (Dubai)",link:"https://elfdubai.org",descEn:"Award activity clustered around the Emirates Airline Festival of Literature each January.",descAr:"نشاط الجوائز يتمحور حول مهرجان طيران الإمارات للآداب كل يناير.",verified:"2026-07-09"},
+{id:"rashid-humaid",section:"arabic",nameEn:"Rashid bin Humaid Award for Culture & Science",nameAr:"جائزة راشد بن حميد للثقافة والعلوم",orgEn:"Ajman Department of Culture",orgAr:"دائرة الثقافة والإعلام بعجمان",country:"AE",category:"culture",valueEn:"Multi-category (poetry, short story, research, arts); values not consistently published — verify with organizer",valueAr:"فئات متعددة (شعر، قصة، بحوث، فنون)؛ القيم غير معلنة باطراد — يُرجى التحقق",eligEn:"Arab writers and researchers; annual cycle announced via Ajman cultural channels.",eligAr:"للكتّاب والباحثين العرب؛ دورة سنوية تُعلن عبر قنوات عجمان الثقافية.",open:null,close:null,announce:"Annual (Ajman)",link:"https://adtca.gov.ae",descEn:"One of the UAE's longest-running emirate-level cultural awards.",descAr:"من أعرق الجوائز الثقافية على مستوى الإمارات المحلية.",verified:"2026-07-09"},
+{id:"booker-intl",section:"english",nameEn:"Bukhman International Booker Prize",nameAr:"جائزة بوكر الدولية (بوخمان)",orgEn:"Booker Prize Foundation, London",orgAr:"مؤسسة بوكر، لندن",country:"GB",category:"translation",valueEn:"£100,000 split author/translator; £2,500 each × 6 shortlisted pairs",valueAr:"100 ألف جنيه مناصفة بين المؤلف والمترجم؛ 2,500 لكل ثنائي في القائمة القصيرة",eligEn:"Fiction translated into English, published UK/Ireland 1 May 2026 – 30 Apr 2027; publisher submission only.",eligAr:"روايات مترجمة إلى الإنجليزية منشورة في بريطانيا/أيرلندا؛ الترشيح عبر الناشرين فقط.",open:"2026-07-02",close:"2026-09-25",announce:"May 2027 (winner)",link:"https://thebookerprizes.com/international-booker-prize",descEn:"The world's most influential prize for translated fiction — pool doubled to £100k from 2027.",descAr:"أكثر جوائز الأدب المترجم تأثيراً — تضاعفت قيمتها إلى 100 ألف جنيه من دورة 2027.",verified:"2026-07-09"},
+{id:"booker",section:"english",nameEn:"The Booker Prize",nameAr:"جائزة بوكر",orgEn:"Booker Prize Foundation, London",orgAr:"مؤسسة بوكر، لندن",country:"GB",category:"fiction",valueEn:"£50,000 winner; £2,500 per shortlisted title",valueAr:"50 ألف جنيه للفائز؛ 2,500 لكل عمل في القائمة القصيرة",eligEn:"English-language novels published in UK/Ireland; publisher submission only.",eligAr:"روايات بالإنجليزية منشورة في بريطانيا/أيرلندا؛ الترشيح عبر الناشرين.",open:null,close:null,announce:"November (winner)",link:"https://thebookerprizes.com",descEn:"The flagship English-language fiction prize.",descAr:"الجائزة الأبرز للرواية المكتوبة بالإنجليزية.",verified:"2026-07-09"},
+{id:"tseliot",section:"english",nameEn:"T. S. Eliot Prize for Poetry",nameAr:"جائزة ت. س. إليوت للشعر",orgEn:"T. S. Eliot Foundation, London",orgAr:"مؤسسة ت. س. إليوت، لندن",country:"GB",category:"poetry",valueEn:"£25,000 winner; shortlist honoraria",valueAr:"25 ألف جنيه للفائز؛ مكافآت للقائمة القصيرة",eligEn:"New poetry collections published in UK/Ireland; publisher submission.",eligAr:"دواوين جديدة منشورة في بريطانيا/أيرلندا؛ الترشيح عبر الناشرين.",open:"2026-06-01",close:"2026-07-31",announce:"Mid-January 2027",link:"https://tseliot.com/prize",descEn:"The UK's most prestigious single-collection poetry prize, judged by poets.",descAr:"أرفع جائزة بريطانية لديوان شعري واحد، يحكمها شعراء.",verified:"2026-07-09"},
+{id:"forward",section:"english",nameEn:"Forward Prizes for Poetry",nameAr:"جوائز فوروارد للشعر",orgEn:"Forward Arts Foundation, UK",orgAr:"مؤسسة فوروارد للفنون، بريطانيا",country:"GB",category:"poetry",valueEn:"£10,000 Best Collection; £5,000 Best First Collection; £1,000 Best Single Poem (typical values)",valueAr:"10 آلاف جنيه لأفضل ديوان؛ 5 آلاف لأفضل ديوان أول؛ ألف لأفضل قصيدة (قيم معتادة)",eligEn:"UK/Ireland-published collections & poems; publisher/magazine submission.",eligAr:"دواوين وقصائد منشورة في بريطانيا/أيرلندا؛ عبر الناشرين والمجلات.",open:"2025-12-01",close:"2026-03-15",announce:"Autumn 2026",link:"https://forwardartsfoundation.org",descEn:"The UK & Ireland's most influential awards for new poetry, in three categories.",descAr:"أكثر جوائز الشعر الجديد تأثيراً في بريطانيا وأيرلندا، بثلاث فئات.",verified:"2026-07-09"},
+{id:"griffin",section:"english",nameEn:"Griffin Poetry Prize",nameAr:"جائزة غريفين للشعر",orgEn:"Griffin Trust, Canada",orgAr:"مؤسسة غريفين، كندا",country:"CA",category:"poetry",valueEn:"≈CAD 130,000 total, incl. translated poetry — verify current cycle",valueAr:"نحو 130 ألف دولار كندي إجمالاً، تشمل الشعر المترجم — يُرجى التحقق",eligEn:"English-language (incl. translations into English) collections; publisher submission, deadline ~Dec.",eligAr:"دواوين بالإنجليزية (تشمل المترجَم إليها)؛ عبر الناشرين، الموعد نحو ديسمبر.",open:null,close:"2026-12-31",announce:"Spring/Summer 2027",link:"https://griffinpoetryprize.com",descEn:"Among the world's largest poetry prizes, with strong space for poetry in translation.",descAr:"من أكبر جوائز الشعر عالمياً، بمساحة قوية للشعر المترجم.",verified:"2026-07-09"},
+{id:"banipal",section:"english",nameEn:"Saif Ghobash Banipal Prize for Arabic Literary Translation",nameAr:"جائزة سيف غباش–بانيبال للترجمة الأدبية من العربية",orgEn:"SOAS / Society of Authors, London",orgAr:"سواس / جمعية المؤلفين، لندن",country:"GB",category:"translation",valueEn:"£3,000–£4,000 winner; £1,000 runner-up",valueAr:"3–4 آلاف جنيه للفائز؛ ألف جنيه للوصيف",eligEn:"English translations of Arabic literary works (post-1967 originals), published the prior year; publisher entry by 31 March.",eligAr:"ترجمات إنجليزية لأعمال أدبية عربية (أصلها بعد 1967) منشورة العام السابق؛ عبر الناشر حتى 31 مارس.",open:"2026-01-01",close:"2026-03-31",announce:"January 2027",link:"https://www.banipaltrust.org.uk/prize",descEn:"The first prize in the world for published Arabic→English literary translation; management passing to SOAS from 2026.",descAr:"أول جائزة عالمياً للترجمة الأدبية المنشورة من العربية إلى الإنجليزية؛ تنتقل إدارتها إلى سواس من 2026.",verified:"2026-07-09"},
+{id:"nta",section:"english",nameEn:"National Translation Awards (Prose & Poetry)",nameAr:"جائزتا الترجمة الوطنية (نثر وشعر)",orgEn:"ALTA, USA",orgAr:"رابطة المترجمين الأدبيين الأمريكية",country:"US",category:"translation",valueEn:"$4,000 per category — verify current cycle",valueAr:"4 آلاف دولار لكل فئة — يُرجى التحقق",eligEn:"Book-length translations into English published in the US the prior year; submission ~spring.",eligAr:"ترجمات كاملة إلى الإنجليزية منشورة في أمريكا العام السابق؛ التقديم نحو الربيع.",open:null,close:null,announce:"ALTA conference (autumn)",link:"https://literarytranslators.org",descEn:"The only US award judged rigorously against the source text.",descAr:"الجائزة الأمريكية الوحيدة التي تُحكَّم بمقارنة صارمة مع النص الأصلي.",verified:"2026-07-09"},
+{id:"pen-heim",section:"english",nameEn:"PEN/Heim Translation Fund Grants",nameAr:"منح صندوق بن/هايم للترجمة",orgEn:"PEN America, New York",orgAr:"بن أمريكا، نيويورك",country:"US",category:"translation",valueEn:"$2,000–$5,000 per grant, multiple grants annually",valueAr:"2–5 آلاف دولار لكل منحة، عدة منح سنوياً",eligEn:"Translators with in-progress, unpublished translations into English — open individual application.",eligAr:"للمترجمين أصحاب مشاريع ترجمة غير منشورة إلى الإنجليزية — تقديم فردي مفتوح.",open:"2026-09-01",close:"2027-01-15",announce:"Summer",link:"https://pen.org/pen-heim-grants",descEn:"The key funding route for unpublished translations — ideal for translators without a publisher yet.",descAr:"أهم مسار تمويلي للترجمات غير المنشورة — مثالي لمن لا ناشر له بعد.",verified:"2026-07-09"},
+{id:"pen-translation",section:"english",nameEn:"PEN Translation Prize",nameAr:"جائزة بن للترجمة",orgEn:"PEN America, New York",orgAr:"بن أمريكا، نيويورك",country:"US",category:"translation",valueEn:"$3,000",valueAr:"3 آلاف دولار",eligEn:"Book-length prose translations into English published in the US; submissions ~by May.",eligAr:"ترجمات نثرية كاملة إلى الإنجليزية منشورة في أمريكا؛ التقديم نحو مايو.",open:null,close:null,announce:"PEN America Literary Awards",link:"https://pen.org/literary-awards",descEn:"Long-running US recognition for published prose translation.",descAr:"تقدير أمريكي عريق للترجمة النثرية المنشورة.",verified:"2026-07-09"},
+{id:"warwick",section:"english",nameEn:"Warwick Prize for Women in Translation",nameAr:"جائزة واريك للنساء في الترجمة",orgEn:"University of Warwick, UK",orgAr:"جامعة واريك، بريطانيا",country:"GB",category:"translation",valueEn:"£1,000 split author/translator — verify current cycle",valueAr:"ألف جنيه مناصفة بين المؤلفة والمترجم/ة — يُرجى التحقق",eligEn:"Works by women, translated into English, UK/Ireland publication; publisher submission ~spring.",eligAr:"أعمال لكاتبات مترجمة إلى الإنجليزية ومنشورة في بريطانيا/أيرلندا؛ عبر الناشرين نحو الربيع.",open:null,close:null,announce:"November",link:"https://warwick.ac.uk/fac/cross_fac/womenintranslation",descEn:"Addresses the gender gap in translated literature.",descAr:"تعالج فجوة التمثيل النسائي في الأدب المترجم.",verified:"2026-07-09"},
+{id:"london-mag",section:"english",nameEn:"The London Magazine Poetry Prize",nameAr:"جائزة مجلة لندن للشعر",orgEn:"The London Magazine",orgAr:"مجلة لندن",country:"GB",category:"poetry",valueEn:"£1,000 / £600 / £400 (1st/2nd/3rd) + publication",valueAr:"1000 / 600 / 400 جنيه (المراكز الثلاثة) + النشر",eligEn:"Open international individual entry; unpublished poems ≤40 lines; entry fee applies.",eligAr:"تقديم فردي دولي مفتوح؛ قصائد غير منشورة حتى 40 سطراً؛ برسم اشتراك.",open:"2025-12-19",close:"2026-03-30",announce:"Summer 2026",link:"https://thelondonmagazine.org",descEn:"Direct-entry contest from the UK's oldest literary magazine.",descAr:"مسابقة بتقديم مباشر من أقدم مجلة أدبية بريطانية.",verified:"2026-07-09"},
+{id:"bridport",section:"english",nameEn:"Bridport Prize (Poetry)",nameAr:"جائزة بريدبورت (الشعر)",orgEn:"Bridport Arts Centre, UK",orgAr:"مركز بريدبورت للفنون، بريطانيا",country:"GB",category:"poetry",valueEn:"Tiered cash prizes + anthology publication",valueAr:"جوائز نقدية متدرجة + النشر في أنطولوجيا",eligEn:"Open international individual entry; unpublished poems ≤42 lines; own-translations eligible; entry fee.",eligAr:"تقديم فردي دولي؛ قصائد غير منشورة حتى 42 سطراً؛ تُقبل ترجمة الكاتب لعمله؛ برسم اشتراك.",open:"2026-01-01",close:"2026-05-31",announce:"17 October 2026",link:"https://bridportprize.org.uk",descEn:"One of the UK's best-known open writing competitions.",descAr:"من أشهر المسابقات المفتوحة للكتابة في بريطانيا.",verified:"2026-07-09"}
+];
+
+const CATEGORIES={literature:{en:"Literature (multi-genre)",ar:"الأدب (فئات متعددة)"},fiction:{en:"Fiction & Narrative",ar:"الرواية والسرد"},poetry:{en:"Poetry",ar:"الشعر"},translation:{en:"Translation",ar:"الترجمة"},children:{en:"Children's & YA",ar:"أدب الطفل واليافعين"},culture:{en:"Culture & Humanities",ar:"الثقافة والإنسانيات"},linguistics:{en:"Language & Linguistics",ar:"اللغة واللسانيات"},research:{en:"Academic Research",ar:"البحث الأكاديمي"},emerging:{en:"Emerging Writers",ar:"المواهب الصاعدة"}};
+const COUNTRIES={AE:{en:"UAE",ar:"الإمارات"},QA:{en:"Qatar",ar:"قطر"},KW:{en:"Kuwait",ar:"الكويت"},SA:{en:"Saudi Arabia",ar:"السعودية"},EG:{en:"Egypt",ar:"مصر"},MA:{en:"Morocco",ar:"المغرب"},GB:{en:"United Kingdom",ar:"بريطانيا"},US:{en:"United States",ar:"أمريكا"},CA:{en:"Canada",ar:"كندا"},FR:{en:"France",ar:"فرنسا"},INT:{en:"International",ar:"دولي"},OTHER:{en:"Other",ar:"أخرى"}};
+
+const T={
+appName:{en:"Diwan of Prizes",ar:"ديوان الجوائز"},
+tagline:{en:"Literary, translation & cultural awards — verified and tracked",ar:"جوائز الأدب والترجمة والثقافة — موثّقة ومُتابَعة"},
+tabArabic:{en:"Arabic Awards",ar:"الجوائز العربية"},tabEnglish:{en:"English & International",ar:"الإنجليزية والدولية"},
+tabSaved:{en:"Saved",ar:"المحفوظات"},tabAdd:{en:"+ Add Prize",ar:"+ أضف جائزة"},
+search:{en:"Search awards, organizers…",ar:"ابحث في الجوائز والجهات…"},
+allCountries:{en:"All countries",ar:"كل الدول"},allCategories:{en:"All categories",ar:"كل الفئات"},allStatus:{en:"Any status",ar:"كل الحالات"},
+open:{en:"Open",ar:"مفتوحة"},upcoming:{en:"Upcoming",ar:"قادمة"},closed:{en:"Closed",ar:"مغلقة"},check:{en:"Check site",ar:"راجع الموقع"},
+closingSoon:{en:"Closing soon",ar:"تُغلق قريباً"},daysLeft:{en:"days left",ar:"يوماً متبقياً"},
+sortDeadline:{en:"Sort: nearest deadline",ar:"الترتيب: أقرب موعد"},sortName:{en:"Sort: name",ar:"الترتيب: الاسم"},sortValue:{en:"Sort: prize value",ar:"الترتيب: قيمة الجائزة"},
+organizer:{en:"Organizer",ar:"الجهة المنظِّمة"},prize:{en:"Prize value",ar:"قيمة الجائزة"},eligibility:{en:"Eligibility",ar:"شروط الأهلية"},
+windowLbl:{en:"Application window",ar:"فترة التقديم"},announce:{en:"Winner announced",ar:"إعلان الفائزين"},
+apply:{en:"Official site & application",ar:"الموقع الرسمي والتقديم"},details:{en:"Details",ar:"التفاصيل"},
+save:{en:"Save",ar:"حفظ"},calendar:{en:"Add deadline to calendar",ar:"أضف الموعد إلى التقويم"},
+results:{en:"awards",ar:"جائزة"},noResults:{en:"No awards match these filters. Clear one and try again.",ar:"لا توجد جوائز مطابقة. أزل أحد المرشحات وحاول مجدداً."},
+emptySaved:{en:"Nothing saved yet. Tap the star on any award to track it here.",ar:"لا محفوظات بعد. اضغط النجمة على أي جائزة لتتابعها هنا."},
+verifiedOn:{en:"Verified",ar:"تاريخ التحقق"},
+addTitle:{en:"Add a new prize",ar:"إضافة جائزة جديدة"},
+addNote:{en:"New prizes are saved in this browser and included in search, filters, deadlines and the calendar. Use Export to back them up as a file, and Import to restore them on another device.",ar:"تُحفظ الجوائز الجديدة في هذا المتصفح وتُدرج في البحث والمرشحات والمواعيد والتقويم. استخدم «تصدير» لأخذ نسخة احتياطية كملف، و«استيراد» لاستعادتها على جهاز آخر."},
+nameEnL:{en:"Award name (English)",ar:"اسم الجائزة (إنجليزي)"},nameArL:{en:"Award name (Arabic)",ar:"اسم الجائزة (عربي)"},
+orgL:{en:"Organizer",ar:"الجهة المنظمة"},sectionL:{en:"Interface",ar:"الواجهة"},countryL:{en:"Country",ar:"الدولة"},categoryL:{en:"Category",ar:"الفئة"},
+valueL:{en:"Prize value",ar:"قيمة الجائزة"},eligL:{en:"Eligibility",ar:"شروط الأهلية"},
+openL:{en:"Opens (date)",ar:"يفتح (تاريخ)"},closeL:{en:"Closes (date)",ar:"يُغلق (تاريخ)"},
+announceL:{en:"Winner announcement",ar:"موعد إعلان الفائزين"},linkL:{en:"Official link (https://…)",ar:"الرابط الرسمي (https://…)"},
+descL:{en:"Brief description",ar:"وصف موجز"},
+saveAward:{en:"Save prize",ar:"حفظ الجائزة"},cancel:{en:"Cancel",ar:"إلغاء"},edit:{en:"Edit",ar:"تعديل"},del:{en:"Delete",ar:"حذف"},
+exportBtn:{en:"⬇ Export my prizes",ar:"⬇ تصدير جوائزي"},importBtn:{en:"⬆ Import",ar:"⬆ استيراد"},
+yourPrizes:{en:"Your added prizes",ar:"الجوائز التي أضفتها"},custom:{en:"Added by you",ar:"من إضافتك"},
+savedToast:{en:"Prize saved",ar:"تم حفظ الجائزة"},deletedToast:{en:"Prize deleted",ar:"تم حذف الجائزة"},importedToast:{en:"prizes imported",ar:"جائزة مستوردة"},
+storageWarn:{en:"Note: this browser is blocking saved data, so added prizes will last only for this session. Download the file and open it directly in a browser for permanent saving — or use Export to keep a backup.",ar:"تنبيه: هذا المتصفح يمنع حفظ البيانات، لذا ستبقى الجوائز المضافة لهذه الجلسة فقط. نزّل الملف وافتحه مباشرة في متصفح للحفظ الدائم — أو استخدم «تصدير» للاحتفاظ بنسخة."},
+nameReq:{en:"Enter the award name in at least one language.",ar:"أدخل اسم الجائزة بلغة واحدة على الأقل."},
+deadlines:{en:"Nearest deadlines",ar:"أقرب المواعيد"},
+disclaimer:{en:"Built-in data verified July 2026. Always confirm on the official site before submitting.",ar:"البيانات الأساسية موثّقة بتاريخ يوليو 2026. تأكد دائماً من الموقع الرسمي قبل التقديم."}
+};
+
+/* =============== STATE & STORAGE =============== */
+let lang="en", tab="arabic", q="", fCountry="", fCat="", fStatus="", sort="deadline", expanded=null, editingId=null;
+let custom=[], bookmarks=[];
+let storageOK=true;
+try{localStorage.setItem("__t","1");localStorage.removeItem("__t");}catch(e){storageOK=false;}
+function loadState(){
+  if(!storageOK)return;
+  try{custom=JSON.parse(localStorage.getItem("diwan-custom")||"[]");}catch(e){custom=[];}
+  try{bookmarks=JSON.parse(localStorage.getItem("diwan-bookmarks")||"[]");}catch(e){bookmarks=[];}
+  try{lang=localStorage.getItem("diwan-lang")||"en";}catch(e){}
+}
+function persist(){
+  if(!storageOK)return;
+  try{localStorage.setItem("diwan-custom",JSON.stringify(custom));localStorage.setItem("diwan-bookmarks",JSON.stringify(bookmarks));localStorage.setItem("diwan-lang",lang);}catch(e){}
+}
+function t(k){return T[k]?T[k][lang]:k;}
+function all(){return BUILT_IN.concat(custom);}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+/* =============== LOGIC =============== */
+function statusOf(a){
+  const now=new Date();
+  const o=a.open?new Date(a.open+"T00:00:00"):null, c=a.close?new Date(a.close+"T23:59:59"):null;
+  if(c&&now>c)return"closed";
+  if(o&&now<o)return"upcoming";
+  if(c)return"open";
+  if(o&&!c)return now>=o?"open":"upcoming";
+  return"check";
+}
+function daysLeft(a){
+  if(!a.close)return null;
+  const d=Math.ceil((new Date(a.close+"T23:59:59")-new Date())/86400000);
+  return d>=0?d:null;
+}
+function fmtD(iso){
+  if(!iso)return"—";
+  try{return new Date(iso+"T12:00:00").toLocaleDateString(lang==="ar"?"ar-AE":"en-GB",{day:"numeric",month:"short",year:"numeric"});}catch(e){return iso;}
+}
+function valueRank(a){
+  const s=(a.valueEn||"").replace(/,/g,"");
+  const m=s.match(/(\d+(?:\.\d+)?)\s*M/i); if(m)return parseFloat(m[1])*1e6;
+  const n=s.match(/(\d{3,})/); return n?parseInt(n[1],10):0;
+}
+function downloadICS(id){
+  const a=all().find(x=>x.id===id); if(!a||!a.close)return;
+  const dt=a.close.replace(/-/g,"");
+  const title=(lang==="ar"?"موعد إغلاق: "+a.nameAr:"Deadline: "+a.nameEn);
+  const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//DiwanOfPrizes//EN","BEGIN:VEVENT","UID:"+a.id+"-"+dt+"@diwan","DTSTART;VALUE=DATE:"+dt,"SUMMARY:"+title,"DESCRIPTION:"+(a.link||""),"BEGIN:VALARM","TRIGGER:-P7D","ACTION:DISPLAY","DESCRIPTION:"+title,"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const u=URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
+  const el=document.createElement("a");el.href=u;el.download=a.id+"-deadline.ics";el.click();URL.revokeObjectURL(u);
+}
+function toast(msg){
+  const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2200);
+}
+
+/* =============== ACTIONS =============== */
+function toggleLang(){lang=lang==="en"?"ar":"en";persist();render();}
+function setTab(k){tab=k;expanded=null;editingId=null;render();}
+function toggleBookmark(id){bookmarks=bookmarks.includes(id)?bookmarks.filter(x=>x!==id):bookmarks.concat(id);persist();render();}
+function toggleExpand(id){expanded=expanded===id?null:id;render();}
+function jumpTo(id){const a=all().find(x=>x.id===id);if(!a)return;tab=a.section;q="";fCountry="";fCat="";fStatus="";expanded=id;render();}
+function delAward(id){custom=custom.filter(a=>a.id!==id);bookmarks=bookmarks.filter(b=>b!==id);persist();toast(t("deletedToast"));render();}
+function editAward(id){editingId=id;tab="add";render();window.scrollTo({top:0});}
+function exportPrizes(){
+  const u=URL.createObjectURL(new Blob([JSON.stringify(custom,null,2)],{type:"application/json"}));
+  const el=document.createElement("a");el.href=u;el.download="diwan-my-prizes.json";el.click();URL.revokeObjectURL(u);
+}
+function importPrizes(input){
+  const f=input.files&&input.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const arr=JSON.parse(r.result); if(!Array.isArray(arr))throw 0;
+    let n=0;
+    arr.forEach(a=>{if(a&&(a.nameEn||a.nameAr)){a.id=a.id||("custom-"+Date.now()+"-"+n);if(!custom.some(c=>c.id===a.id)){custom.push(a);n++;}}});
+    persist();toast(n+" "+t("importedToast"));render();
+  }catch(e){toast("Invalid file / ملف غير صالح");}};
+  r.readAsText(f); input.value="";
+}
+function saveForm(){
+  const g=id=>document.getElementById(id).value.trim();
+  const nameEn=g("f-nameEn"),nameAr=g("f-nameAr");
+  if(!nameEn&&!nameAr){toast(t("nameReq"));return;}
+  const a={
+    id:editingId||("custom-"+Date.now()),
+    section:g("f-section"),country:g("f-country"),category:g("f-category"),
+    nameEn:nameEn||nameAr,nameAr:nameAr||nameEn,
+    orgEn:g("f-org"),orgAr:g("f-org"),
+    valueEn:g("f-value"),valueAr:g("f-value"),
+    eligEn:g("f-elig"),eligAr:g("f-elig"),
+    open:g("f-open")||null,close:g("f-close")||null,
+    announce:g("f-announce"),link:g("f-link"),
+    descEn:g("f-desc"),descAr:g("f-desc"),
+    verified:new Date().toISOString().slice(0,10),custom:true
+  };
+  custom=custom.filter(c=>c.id!==a.id).concat(a);
+  persist();editingId=null;toast(t("savedToast"));
+  tab=a.section;expanded=a.id;render();
+}
+
+/* =============== RENDER =============== */
+function chipStyle(st){
+  if(st==="open")return"background:var(--open-soft);color:var(--open)";
+  if(st==="upcoming")return"background:var(--brass-soft);color:#7A5E17";
+  if(st==="closed")return"background:var(--closed-soft);color:var(--closed)";
+  return"background:var(--teal-soft);color:var(--teal)";
+}
+function spineColor(st){
+  if(st==="open")return"var(--open)";if(st==="upcoming")return"var(--brass)";
+  if(st==="closed")return"var(--closed)";return"var(--teal)";
+}
+function cardHTML(a){
+  const st=statusOf(a),d=daysLeft(a),marked=bookmarks.includes(a.id),isOpen=expanded===a.id;
+  const name=lang==="ar"?a.nameAr:a.nameEn, org=lang==="ar"?a.orgAr:a.orgEn;
+  const desc=lang==="ar"?a.descAr:a.descEn, val=lang==="ar"?a.valueAr:a.valueEn, elig=lang==="ar"?a.eligAr:a.eligEn;
+  return `<article class="card">
+    <div class="spine" style="background:linear-gradient(180deg,${spineColor(st)},${spineColor(st)} 60%,var(--brass))"></div>
+    <div class="card-body">
+      <div class="card-head"><div style="min-width:0">
+        <div class="meta">
+          <span class="chip" style="${chipStyle(st)}">${t(st)}${st==="open"&&d!==null&&d<=14?" · "+t("closingSoon"):""}</span>
+          <span>${(COUNTRIES[a.country]||{})[lang]||esc(a.country)}</span><span>·</span>
+          <span>${(CATEGORIES[a.category]||{})[lang]||esc(a.category)}</span>
+          ${a.custom?`<span class="chip" style="background:var(--brass-soft);color:#7A5E17">${t("custom")}</span>`:""}
+        </div>
+        <h3 class="disp">${esc(name)}</h3>
+        <div class="org">${esc(org)}</div>
+      </div>
+      <button class="bookmark${marked?" on":""}" aria-pressed="${marked}" aria-label="${t("save")}" onclick="toggleBookmark('${a.id}')">${marked?"★":"☆"}</button></div>
+      <p class="desc">${esc(desc)}</p>
+      <div class="val">${esc(val)}</div>
+      <div class="dates">
+        <span>${t("windowLbl")}: ${fmtD(a.open)} → ${fmtD(a.close)}</span>
+        ${st==="open"&&d!==null?`<span class="dleft" style="color:${d<=14?"var(--alert)":"var(--open)"}">${d} ${t("daysLeft")}</span>`:""}
+      </div>
+      ${isOpen?`<div class="detail">
+        <div><span class="k">${t("eligibility")}: </span>${esc(elig)||"—"}</div>
+        <div><span class="k">${t("announce")}: </span>${esc(a.announce)||"—"}</div>
+        <div style="font-size:11px;color:var(--muted)">${t("verifiedOn")}: ${esc(a.verified)||"—"}</div>
+      </div>`:""}
+      <div class="actions">
+        <button class="btn btn-soft" onclick="toggleExpand('${a.id}')">${isOpen?"−":"+"} ${t("details")}</button>
+        ${a.close&&st!=="closed"?`<button class="btn btn-brass" onclick="downloadICS('${a.id}')">🗓 ${t("calendar")}</button>`:""}
+        ${a.link?`<a class="btn btn-teal" href="${esc(a.link)}" target="_blank" rel="noopener noreferrer">${t("apply")} ↗</a>`:""}
+        ${a.custom?`<button class="btn btn-line" onclick="editAward('${a.id}')">${t("edit")}</button><button class="btn btn-danger" onclick="delAward('${a.id}')">${t("del")}</button>`:""}
+      </div>
+    </div></article>`;
+}
+function directoryHTML(){
+  let list=all();
+  if(tab==="arabic"||tab==="english")list=list.filter(a=>a.section===tab);
+  if(tab==="saved")list=list.filter(a=>bookmarks.includes(a.id));
+  if(fCountry)list=list.filter(a=>a.country===fCountry);
+  if(fCat)list=list.filter(a=>a.category===fCat);
+  if(fStatus)list=list.filter(a=>statusOf(a)===fStatus);
+  if(q.trim()){const s=q.trim().toLowerCase();list=list.filter(a=>[a.nameEn,a.nameAr,a.orgEn,a.orgAr,a.descEn,a.descAr].join(" ").toLowerCase().includes(s));}
+  const rank={open:0,upcoming:1,check:2,closed:3};
+  list.sort((a,b)=>{
+    if(sort==="name")return(lang==="ar"?a.nameAr:a.nameEn).localeCompare(lang==="ar"?b.nameAr:b.nameEn,lang);
+    if(sort==="value")return valueRank(b)-valueRank(a);
+    const sa=statusOf(a),sb=statusOf(b);
+    if(rank[sa]!==rank[sb])return rank[sa]-rank[sb];
+    return new Date(a.close||"2999-01-01")-new Date(b.close||"2999-01-01");
+  });
+  const opts=(obj,sel,allLbl)=>`<option value="">${allLbl}</option>`+Object.keys(obj).map(k=>`<option value="${k}"${sel===k?" selected":""}>${obj[k][lang]}</option>`).join("");
+  return `
+  <div class="filters">
+    <input value="${esc(q)}" placeholder="${t("search")}" aria-label="${t("search")}" oninput="q=this.value;renderList()">
+    <div class="row">
+      <select onchange="fCountry=this.value;render()">${opts(COUNTRIES,fCountry,t("allCountries"))}</select>
+      <select onchange="fCat=this.value;render()">${opts(CATEGORIES,fCat,t("allCategories"))}</select>
+      <select onchange="fStatus=this.value;render()"><option value="">${t("allStatus")}</option>
+        <option value="open"${fStatus==="open"?" selected":""}>${t("open")}</option>
+        <option value="upcoming"${fStatus==="upcoming"?" selected":""}>${t("upcoming")}</option>
+        <option value="closed"${fStatus==="closed"?" selected":""}>${t("closed")}</option></select>
+      <select onchange="sort=this.value;render()">
+        <option value="deadline"${sort==="deadline"?" selected":""}>${t("sortDeadline")}</option>
+        <option value="name"${sort==="name"?" selected":""}>${t("sortName")}</option>
+        <option value="value"${sort==="value"?" selected":""}>${t("sortValue")}</option></select>
+    </div>
+  </div>
+  <div class="count">${list.length} ${t("results")}</div>
+  ${list.length===0?`<div class="empty">${tab==="saved"?t("emptySaved"):t("noResults")}</div>`:`<div class="grid">${list.map(cardHTML).join("")}</div>`}`;
+}
+function fieldRow(id,label,val,type){
+  if(type==="date")return`<label class="f">${label}<input type="date" id="${id}" value="${esc(val)}"></label>`;
+  if(type==="area")return`<label class="f full">${label}<textarea id="${id}" rows="2">${esc(val)}</textarea></label>`;
+  return`<label class="f">${label}<input id="${id}" value="${esc(val)}"></label>`;
+}
+function addHTML(){
+  const e=editingId?custom.find(c=>c.id===editingId)||{}:{};
+  const selOpts=(obj,sel)=>Object.keys(obj).map(k=>`<option value="${k}"${(sel||"")===k?" selected":""}>${obj[k][lang]}</option>`).join("");
+  return `
+  <h2 class="disp">${t("addTitle")}</h2>
+  <p class="note">${t("addNote")}</p>
+  <div class="warn" style="display:${storageOK?"none":"block"}">${t("storageWarn")}</div>
+  <div class="form-card"><div class="form-grid">
+    ${fieldRow("f-nameEn",t("nameEnL"),e.nameEn||"")}
+    ${fieldRow("f-nameAr",t("nameArL"),e.nameAr||"")}
+    ${fieldRow("f-org",t("orgL"),e.orgEn||"")}
+    <label class="f">${t("sectionL")}<select id="f-section">
+      <option value="arabic"${e.section!=="english"?" selected":""}>${t("tabArabic")}</option>
+      <option value="english"${e.section==="english"?" selected":""}>${t("tabEnglish")}</option></select></label>
+    <label class="f">${t("countryL")}<select id="f-country">${selOpts(COUNTRIES,e.country||"AE")}</select></label>
+    <label class="f">${t("categoryL")}<select id="f-category">${selOpts(CATEGORIES,e.category||"literature")}</select></label>
+    ${fieldRow("f-value",t("valueL"),e.valueEn||"")}
+    ${fieldRow("f-link",t("linkL"),e.link||"")}
+    ${fieldRow("f-open",t("openL"),e.open||"","date")}
+    ${fieldRow("f-close",t("closeL"),e.close||"","date")}
+    ${fieldRow("f-announce",t("announceL"),e.announce||"")}
+    <div></div>
+    ${fieldRow("f-elig",t("eligL"),e.eligEn||"","area")}
+    ${fieldRow("f-desc",t("descL"),e.descEn||"","area")}
+    <div class="full" style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-teal" style="font-size:14px;padding:10px 18px" onclick="saveForm()">${t("saveAward")}</button>
+      ${editingId?`<button class="btn btn-line" style="font-size:14px;padding:10px 18px" onclick="editingId=null;render()">${t("cancel")}</button>`:""}
+    </div>
+  </div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;align-items:center">
+    <button class="btn btn-brass" onclick="exportPrizes()">${t("exportBtn")}</button>
+    <label class="btn btn-line" style="cursor:pointer">${t("importBtn")}<input type="file" accept=".json" style="display:none" onchange="importPrizes(this)"></label>
+  </div>
+  ${custom.length?`<h2 class="disp" style="font-size:19px">${t("yourPrizes")} (${custom.length})</h2>`+custom.map(a=>`
+    <div class="admin-row"><div style="min-width:0">
+      <div class="nm">${esc(lang==="ar"?a.nameAr:a.nameEn)}</div>
+      <div class="vf">${t("verifiedOn")}: ${esc(a.verified)||"—"} · ${t(statusOf(a))}</div></div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn btn-soft" onclick="editAward('${a.id}')">${t("edit")}</button>
+        <button class="btn btn-danger" onclick="delAward('${a.id}')">${t("del")}</button></div></div>`).join(""):""}`;
+}
+function render(){
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+  document.getElementById("appname").textContent=t("appName");
+  document.getElementById("tagline").textContent=t("tagline");
+  document.getElementById("langBtn").textContent=lang==="en"?"العربية":"English";
+  document.getElementById("footer").textContent=t("disclaimer");
+  /* ticker */
+  const soon=all().map(a=>({a,d:daysLeft(a),s:statusOf(a)})).filter(x=>x.s==="open"&&x.d!==null).sort((x,y)=>x.d-y.d).slice(0,4);
+  document.getElementById("ticker").innerHTML=soon.length?`<span class="ticker-label">${t("deadlines")}</span>`+soon.map(({a,d})=>
+    `<button class="${d<=14?"hot":""}" onclick="jumpTo('${a.id}')">${esc((lang==="ar"?a.nameAr:a.nameEn).split("(")[0].trim())} · ${d} ${t("daysLeft")}</button>`).join(""):"";
+  /* tabs */
+  const tabs=[["arabic",t("tabArabic")],["english",t("tabEnglish")],["saved",t("tabSaved")+(bookmarks.length?" ("+bookmarks.length+")":"")],["add",t("tabAdd")]];
+  document.getElementById("tabs").innerHTML=tabs.map(([k,l])=>`<button role="tab" aria-selected="${tab===k}" onclick="setTab('${k}')">${l}</button>`).join("");
+  /* main */
+  document.getElementById("main").innerHTML=tab==="add"?addHTML():directoryHTML();
+}
+function renderList(){ /* re-render only the results while typing, keep input focus */
+  const container=document.getElementById("main");
+  const old=container.querySelector(".count"); if(!old){render();return;}
+  let list=all();
+  if(tab==="arabic"||tab==="english")list=list.filter(a=>a.section===tab);
+  if(tab==="saved")list=list.filter(a=>bookmarks.includes(a.id));
+  if(fCountry)list=list.filter(a=>a.country===fCountry);
+  if(fCat)list=list.filter(a=>a.category===fCat);
+  if(fStatus)list=list.filter(a=>statusOf(a)===fStatus);
+  if(q.trim()){const s=q.trim().toLowerCase();list=list.filter(a=>[a.nameEn,a.nameAr,a.orgEn,a.orgAr,a.descEn,a.descAr].join(" ").toLowerCase().includes(s));}
+  const rank={open:0,upcoming:1,check:2,closed:3};
+  list.sort((a,b)=>{
+    if(sort==="name")return(lang==="ar"?a.nameAr:a.nameEn).localeCompare(lang==="ar"?b.nameAr:b.nameEn,lang);
+    if(sort==="value")return valueRank(b)-valueRank(a);
+    const sa=statusOf(a),sb=statusOf(b);
+    if(rank[sa]!==rank[sb])return rank[sa]-rank[sb];
+    return new Date(a.close||"2999-01-01")-new Date(b.close||"2999-01-01");
+  });
+  old.textContent=list.length+" "+t("results");
+  const gridOrEmpty=container.querySelector(".grid, .empty");
+  if(gridOrEmpty){
+    const div=document.createElement("div");
+    div.innerHTML=list.length===0?`<div class="empty">${tab==="saved"?t("emptySaved"):t("noResults")}</div>`:`<div class="grid">${list.map(cardHTML).join("")}</div>`;
+    gridOrEmpty.replaceWith(div.firstChild);
+  }
+}
+loadState();render();
+/* PWA: register the service worker when served over http(s).
+   Silently skipped when the file is opened directly (file://), so the
+   same file still works double-clicked without hosting. */
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
